@@ -1,47 +1,104 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace _0216p2
+
 {
     internal class Program
     {
 
-        class OneChain
+        public static OneChainList head;
+        internal class OneChainList
         {
-            public int data;
-            public OneChain next = null;
-        public OneChain(int value) 
-        {
-            data = value;
+            public string data;
+            public OneChainList next;
+
+            public OneChainList(string value)
+            {
+                data = value;
+            }
         }
-        }
+
         static void Main(string[] args)
         {
-            OneChain head = null;
+            head = null;
 
-            OneChain node = new OneChain(1);
-            head = node;
+            
 
-            OneChain node2= new OneChain(2);
+            Add(new OneChainList("1"));
+            Add(new OneChainList("2"));
+            Add(new OneChainList("3"));
+            Add(new OneChainList("4"));
 
-            head.next = node2;
-
-            OneChain node3= new OneChain(3);
-
-            node2.next = node3;
-            node3.next = null;
-
-            OneChain item = head;
-            while (item!=null)
+            OneChainList item = head;
+            Console.WriteLine("Törlés előtt");
+            while (item != null)
             {
                 Console.WriteLine(item.data);
                 item = item.next;
             }
 
+            Remove("1");
+
+            Console.WriteLine("Törlés után");
+            item = head;
+            while (item != null)
+            {
+                Console.WriteLine(item.data);
+                item = item.next;
+            }
+
+
             Console.ReadKey();
         }
+
+
+        public static void Add(OneChainList newNode)
+        {
+          
+            if (head == null)
+            {
+                head = newNode;
+            }
+            else
+            {
+               
+                OneChainList lastNode = head;
+                while (lastNode.next != null)
+                {
+                    lastNode = lastNode.next;
+                }
+                lastNode.next = newNode;
+            }
+        }
+
+        public static void Remove(string value)
+        {
+           
+            if (head.data == value)
+            {
+                head = head.next;
+
+            }
+          
+            OneChainList currentNode = head;
+            while (currentNode.next != null && currentNode.next.data != value)
+            {
+                currentNode = currentNode.next;
+            }
+
+
+            if (currentNode.next != null)
+            {
+               
+                currentNode.next = currentNode.next.next;
+            }
+        }
+
+
     }
 }
